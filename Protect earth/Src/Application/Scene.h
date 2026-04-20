@@ -16,6 +16,8 @@ private:
 	MOUSE mouse;
 	SHOT shot;
 
+	int test = 0;
+
 public:
 
 	// ‰Šúİ’è
