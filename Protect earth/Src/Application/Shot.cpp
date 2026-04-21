@@ -16,6 +16,8 @@ void SHOT::Init(MOUSE* mouse)
 	
 	shotWait = 0;
 	shotAnim = 0;
+
+	keyFlg = true;
 }
 
 void SHOT::Update(MOUSE* mouse)
@@ -26,26 +28,35 @@ void SHOT::Update(MOUSE* mouse)
 	}
 	else
 	{
-		m_bullet = m_bullet;
 		//m_bulletScale -= 0.03;
-		shotAnim++;
-		if (shotAnim >= 512)
+		shotAnim += 0.3;
+		if (shotAnim >= 8)
 		{
 			shotAnim = 0;
 			m_bulletFlg = false;
 		}
 	}
 	
-
-	if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
+	if (!m_bulletFlg)
 	{
-		if (shotWait == 0)
+		if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
 		{
-			if(!m_bulletFlg)
+			if (keyFlg)
 			{
-				m_bulletFlg = true;
+				if (shotWait == 0)
+				{
+				
+					m_bulletFlg = true;
+					m_bullet = m_bullet;
+					keyFlg = false;
+				}
 			}
 		}
+		else
+		{
+			keyFlg = true;
+		}
+
 	}
 
 	m_scale = Math::Matrix::CreateScale(m_bulletScale, m_bulletScale, 0);

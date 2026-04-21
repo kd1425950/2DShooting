@@ -15,6 +15,8 @@ private:
 
 	float shotAnim;
 
+	bool keyFlg;
+
 	Math::Matrix m_scale;
 	Math::Matrix m_trans;
 	Math::Matrix m_mat;
