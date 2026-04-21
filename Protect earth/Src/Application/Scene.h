@@ -2,6 +2,7 @@
 #include "player.h"
 #include "Mouse.h"
 #include "Shot.h"
+#include "Meteo.h"
 
 class Scene
 {
@@ -10,6 +11,7 @@ private:
 	// テクスチャ ・・・ 画像データ
 	KdTexture playerTex;
 	KdTexture shotTex;
+	KdTexture meteoTex;
 	KdTexture backTex;
 
 	Math::Matrix backMat;
@@ -18,6 +20,7 @@ private:
 	Player player;
 	MOUSE mouse;
 	SHOT shot;
+	METEO meteo;
 
 public:
 

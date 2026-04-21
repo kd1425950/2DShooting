@@ -6,6 +6,7 @@ void Scene::Draw2D()
 	SHADER.m_spriteShader.SetMatrix(backMat);
 	SHADER.m_spriteShader.DrawTex(&backTex, Math::Rectangle(0, 0, 1280, 720), 1.0f);
 
+	meteo.Draw();
 	player.Draw();
 	shot.Draw();
 }
@@ -14,6 +15,7 @@ void Scene::Update()
 {
 	player.Update(&mouse);
 	shot.Update(&mouse);
+	meteo.Update();
 	mouse.Update();
 
 	backMat = Math::Matrix::CreateTranslation(0, 0, 0);
@@ -29,6 +31,10 @@ void Scene::Init()
 	shotTex.Load("Texture/explosion.png");
 	shot.SetTex(&shotTex);
 
+	meteo.Init();
+	meteoTex.Load("Texture/meteo.png");
+	meteo.SetTex(&meteoTex);
+
 	backTex.Load("Texture/BackGround.png");
 
 	mouse.Init();
@@ -39,6 +45,8 @@ void Scene::Release()
 	// ‰æ‘œ‚Ì‰ğ•úˆ—
 	playerTex.Release();
 	shotTex.Release();
+	backTex.Release();
+	meteoTex.Release();
 }
 
 void Scene::ImGuiUpdate()
