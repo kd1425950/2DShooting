@@ -26,7 +26,7 @@ void Scene::Init()
 	player.SetTex(&playerTex);
 
 	shot.Init(&mouse);
-	shotTex.Load("Texture/enemy.png");
+	shotTex.Load("Texture/explosion.png");
 	shot.SetTex(&shotTex);
 
 	backTex.Load("Texture/BackGround.png");

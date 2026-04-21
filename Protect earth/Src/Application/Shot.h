@@ -4,21 +4,22 @@
 class SHOT
 {
 private:
-	static const int bulletNum = 20;
 
-	Math::Vector2 m_bullet[bulletNum];
+	Math::Vector2 m_bullet;
 
-	float m_bulletScale[bulletNum];
+	float m_bulletScale;
 
-	bool m_bulletFlg[bulletNum];
+	bool m_bulletFlg;
 
 	int shotWait;
 
-	Math::Matrix m_scale[bulletNum];
-	Math::Matrix m_trans[bulletNum];
-	Math::Matrix m_mat[bulletNum];
+	float shotAnim;
 
-	KdTexture* m_tex[bulletNum];
+	Math::Matrix m_scale;
+	Math::Matrix m_trans;
+	Math::Matrix m_mat;
+
+	KdTexture* m_tex;
 
 public:
 	SHOT();
@@ -28,11 +29,5 @@ public:
 	void Update(MOUSE* mouse);
 	void Draw();
 
-	void SetTex(KdTexture* tex) 
-	{
-		for(int b=0;b<bulletNum;b++)
-		{
-			m_tex[b] = tex;
-		}
-	}
+	void SetTex(KdTexture* tex) { m_tex = tex; }
 };
