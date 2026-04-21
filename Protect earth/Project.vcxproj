@@ -159,6 +159,7 @@
     <ClInclude Include="..\Library\tinygltf\stb_image.h" />
     <ClInclude Include="..\Library\tinygltf\stb_image_write.h" />
     <ClInclude Include="..\Library\tinygltf\tiny_gltf.h" />
+    <ClInclude Include="Src\Application\Meteo.h" />
     <ClInclude Include="Src\Application\Mouse.h" />
     <ClInclude Include="Src\Application\player.h" />
     <ClInclude Include="Src\Application\Scene.h" />
@@ -187,6 +188,7 @@
     <ClCompile Include="..\Library\imgui\imgui_impl_dx11.cpp" />
     <ClCompile Include="..\Library\imgui\imgui_impl_win32.cpp" />
     <ClCompile Include="..\Library\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="Src\Application\Meteo.cpp" />
     <ClCompile Include="Src\Application\Mouse.cpp" />
     <ClCompile Include="Src\Application\player.cpp" />
     <ClCompile Include="Src\Application\Scene.cpp" />
