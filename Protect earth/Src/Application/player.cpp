@@ -18,7 +18,6 @@ void Player::Update(MOUSE* mouse)
 {
 	m_player = mouse->GetPos();
 
-
 	m_trans = Math::Matrix::CreateTranslation(m_player.x, m_player.y, 0);
 	m_scale = Math::Matrix::CreateScale(reticleScale, reticleScale, 0);
 	m_mat = m_scale * m_trans;

@@ -10,6 +10,9 @@ private:
 	// テクスチャ ・・・ 画像データ
 	KdTexture playerTex;
 	KdTexture shotTex;
+	KdTexture backTex;
+
+	Math::Matrix backMat;
 
 	//インスタンス
 	Player player;

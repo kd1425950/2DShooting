@@ -3,6 +3,9 @@
 
 void Scene::Draw2D()
 {
+	SHADER.m_spriteShader.SetMatrix(backMat);
+	SHADER.m_spriteShader.DrawTex(&backTex, Math::Rectangle(0, 0, 1280, 720), 1.0f);
+
 	player.Draw();
 	shot.Draw();
 }
@@ -12,6 +15,8 @@ void Scene::Update()
 	player.Update(&mouse);
 	shot.Update(&mouse);
 	mouse.Update();
+
+	backMat = Math::Matrix::CreateTranslation(0, 0, 0);
 }
 
 void Scene::Init()
@@ -23,6 +28,8 @@ void Scene::Init()
 	shot.Init(&mouse);
 	shotTex.Load("Texture/enemy.png");
 	shot.SetTex(&shotTex);
+
+	backTex.Load("Texture/BackGround.png");
 
 	mouse.Init();
 }
