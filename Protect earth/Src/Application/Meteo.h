@@ -13,6 +13,8 @@ public:
 
 	void SetTex(KdTexture* tex) { m_tex = tex; }
 
+	void Particle(Math::Vector2 pos, Math::Vector2 move, float size, bool repet);
+
 private:
 
 	Math::Vector2 m_pos;
