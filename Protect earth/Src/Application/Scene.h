@@ -3,16 +3,19 @@
 #include "Mouse.h"
 #include "Shot.h"
 #include "Meteo.h"
+#include "Particle.h"
 
 class Scene
 {
 private:
+
 
 	// テクスチャ ・・・ 画像データ
 	KdTexture playerTex;
 	KdTexture shotTex;
 	KdTexture meteoTex;
 	KdTexture backTex;
+	KdTexture particleTex;
 
 	Math::Matrix backMat;
 
@@ -21,6 +24,7 @@ private:
 	MOUSE mouse;
 	SHOT shot;
 	METEO meteo;
+	Particle particle;
 
 public:
 

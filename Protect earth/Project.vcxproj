@@ -161,6 +161,7 @@
     <ClInclude Include="..\Library\tinygltf\tiny_gltf.h" />
     <ClInclude Include="Src\Application\Meteo.h" />
     <ClInclude Include="Src\Application\Mouse.h" />
+    <ClInclude Include="Src\Application\Particle.h" />
     <ClInclude Include="Src\Application\player.h" />
     <ClInclude Include="Src\Application\Scene.h" />
     <ClInclude Include="Src\Application\main.h" />
@@ -190,6 +191,7 @@
     <ClCompile Include="..\Library\imgui\imgui_widgets.cpp" />
     <ClCompile Include="Src\Application\Meteo.cpp" />
     <ClCompile Include="Src\Application\Mouse.cpp" />
+    <ClCompile Include="Src\Application\Particle.cpp" />
     <ClCompile Include="Src\Application\player.cpp" />
     <ClCompile Include="Src\Application\Scene.cpp" />
     <ClCompile Include="Src\Application\main.cpp" />

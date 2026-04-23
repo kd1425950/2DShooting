@@ -18,6 +18,9 @@ void Scene::Update()
 	meteo.Update();
 	mouse.Update();
 
+	shot.BulletMeteoHit(&meteo/*, &particle[p]*/);
+	
+
 	backMat = Math::Matrix::CreateTranslation(0, 0, 0);
 }
 

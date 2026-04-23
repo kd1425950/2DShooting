@@ -2,7 +2,7 @@
 
 void METEO::Init()
 {
-	m_pos = { 0,1280 };
+	m_pos = { -53,1280 };
 	m_move = { 0,0 };
 
 	meteoScale = 1.0f;
@@ -37,12 +37,4 @@ void METEO::Draw()
 		SHADER.m_spriteShader.SetMatrix(m_mat);
 		SHADER.m_spriteShader.DrawTex(m_tex, Math::Rectangle(0, 0, 64, 64), 1.0f);
 	}
-}
-
-void METEO::Particle(Math::Vector2 pos, Math::Vector2 move, float size, bool repet)
-{
-	m_pos = pos;
-	m_move = move;
-	meteoScale = size;
-	meteoFlg = repet;
 }

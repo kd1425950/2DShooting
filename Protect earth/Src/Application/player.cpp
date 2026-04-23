@@ -11,7 +11,7 @@ Player::~Player()
 void Player::Init(MOUSE *mouse)
 {
 	m_player = mouse->GetPos();
-	reticleScale = 1.5f;
+	reticleScale = 1.0f;
 }
 
 void Player::Update(MOUSE* mouse)
