@@ -1,17 +1,12 @@
 #include "Shot.h"
-
-SHOT::SHOT()
-{
-}
-
-SHOT::~SHOT()
-{
-}
+#include "Scene.h"
+#include "Meteo.h"
+#include "Particle.h"
 
 void SHOT::Init(MOUSE* mouse)
 {
 	m_bullet = mouse->GetPos();
-	m_bulletScale = 1.0f;
+	m_bulletScale = 2.0f;
 	m_bulletFlg = false;
 	
 	shotWait = 0;
@@ -19,7 +14,7 @@ void SHOT::Init(MOUSE* mouse)
 
 	keyFlg = true;
 
-	bulletRadius = 32;
+	bulletRadius = 32 * m_bulletScale;
 
 	bulletR = mouse->GetPos().x + bulletRadius;
 	bulletL = mouse->GetPos().x - bulletRadius;
@@ -41,7 +36,6 @@ void SHOT::Update(MOUSE* mouse)
 	else
 	{
 		m_bullet = m_bullet;
-
 
 		//m_bulletScale -= 0.03;
 		shotAnim += 0.3;
@@ -90,24 +84,33 @@ void SHOT::Draw()
 	
 }
 
-void SHOT::BulletMeteoHit(METEO* meteo/*,Particle *par*/)
+void SHOT::BulletMeteoHit()
 {
-	Math::Vector2 meteoP = meteo->GetPos();
-	bool meteoF = meteo->GetFlg();
-	float meteoRad = meteo->GetRadius();
+	std::vector <METEO*> meteo = SCENE.GetMeteo();
+	std::vector <Particle*> par = SCENE.GetParticle();
 
-	float meteoR = meteoP.x + meteoRad;
-	float meteoL = meteoP.x - meteoRad;
-	float meteoT = meteoP.y + meteoRad;
-	float meteoB = meteoP.y - meteoRad;
-
-	if (m_bulletFlg && meteoF)
+	for (auto m : meteo)
 	{
-		if (bulletR > meteoL && bulletL < meteoR && bulletT > meteoB && bulletB < meteoT)
+		Math::Vector2 meteoP = m->GetPos();
+		bool meteoF = m->GetFlg();
+		float meteoRad = m->GetRadius();
+
+		float meteoR = meteoP.x + meteoRad;
+		float meteoL = meteoP.x - meteoRad;
+		float meteoT = meteoP.y + meteoRad;
+		float meteoB = meteoP.y - meteoRad;
+
+		if (m_bulletFlg && meteoF)
 		{
-			meteoF = false;
-			meteo->SetFlg(meteoF);
-			//par->Par(meteoP, { par->Rand(), par->Rand() },1,true);
+			if (bulletR > meteoL && bulletL < meteoR && bulletT > meteoB && bulletB < meteoT)
+			{
+				meteoF = false;
+				m->SetFlg(meteoF);
+				for (auto p : par)
+				{
+					p->Par(meteoP, { p->Rand(), p->Rand() }, 1, true);
+				}
+			}
 		}
 	}
 }

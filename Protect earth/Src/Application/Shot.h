@@ -1,7 +1,6 @@
 #pragma once
 #include "Mouse.h"
-#include "Meteo.h"
-#include "Particle.h"
+
 
 class SHOT
 {
@@ -33,14 +32,14 @@ private:
 	KdTexture* m_tex;
 
 public:
-	SHOT();
-	~SHOT();
+	SHOT() {}
+	~SHOT(){}
 
 	void Init(MOUSE *mouse);
 	void Update(MOUSE* mouse);
 	void Draw();
 
-	void BulletMeteoHit(METEO *meteo/*,Particle *par*/);
+	void BulletMeteoHit();
 
 	void SetTex(KdTexture* tex) { m_tex = tex; }
 };

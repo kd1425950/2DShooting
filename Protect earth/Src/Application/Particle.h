@@ -1,5 +1,4 @@
 #pragma once
-#include "Meteo.h"
 
 class Particle
 {

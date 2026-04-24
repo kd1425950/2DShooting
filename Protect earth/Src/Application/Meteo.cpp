@@ -2,7 +2,7 @@
 
 void METEO::Init()
 {
-	m_pos = { -53,1280 };
+	m_pos = { RandX(),RandY()};
 	m_move = { 0,0 };
 
 	meteoScale = 1.0f;
@@ -23,6 +23,15 @@ void METEO::Update()
 	if (m_pos.y <= -200)
 	{
 		meteoFlg = false;
+	}
+
+	if((rand() % 100 + 1) <= 2)
+	{
+		if (!meteoFlg)
+		{
+			meteoFlg = true;
+			m_pos = { RandX(),RandY() };
+		}
 	}
 
 	Math::Matrix trans = Math::Matrix::CreateTranslation(m_pos.x, m_pos.y, 0);

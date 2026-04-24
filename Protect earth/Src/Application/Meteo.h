@@ -31,6 +31,8 @@ public:
 	void SetTop(float top) { meteoTop = top; }
 	void SetBottom(float bottom) { meteoBottom = bottom; }
 	
+	float RandX() { return rand() % 1280 - 640; }
+	float RandY() { return rand() % 500 + 400; }
 
 private:
 

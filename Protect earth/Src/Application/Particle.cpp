@@ -19,6 +19,11 @@ void Particle::Update()
 
 	m_rotate++;
 
+	if (m_pos.y <= -360)
+	{
+		m_repet = false;
+	}
+
 	Math::Matrix scale, rotate, trans;
 	scale = Math::Matrix::CreateScale(m_size, m_size, 0);
 	rotate = Math::Matrix::CreateRotationZ(ToRadians(m_rotate));
