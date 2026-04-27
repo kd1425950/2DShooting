@@ -1,5 +1,7 @@
 #pragma once
 
+class GameScene;
+
 class METEO
 {
 public:
@@ -15,6 +17,8 @@ public:
 
 	Math::Vector2 GetPos() { return m_pos; }
 	Math::Vector2 GetMove() { return m_move; }
+
+	void SetMove(Math::Vector2 move) { m_move = move; }
 
 	bool GetFlg() { return meteoFlg; }
 	void SetFlg(bool flg) { meteoFlg = flg; }
@@ -34,6 +38,9 @@ public:
 	float RandX() { return rand() % 1280 - 640; }
 	float RandY() { return rand() % 500 + 400; }
 
+	float GetScale() { return meteoScale; }
+	void SetScale(float scale) { meteoScale = scale; }
+
 private:
 
 	Math::Vector2 m_pos;
@@ -42,6 +49,8 @@ private:
 	float meteoScale;
 
 	float meteoRadius = 32;
+
+	int meteoAttack;
 
 	float meteoRight = m_pos.x + meteoRadius;
 	float meteoLeft = m_pos.x - meteoRadius;
@@ -53,4 +62,6 @@ private:
 	Math::Matrix m_mat;
 
 	KdTexture *m_tex;
+
+	GameScene* game = nullptr;
 };

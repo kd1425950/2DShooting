@@ -1,10 +1,19 @@
 #include "Shot.h"
-#include "Scene.h"
+#include "GameScene.h"
 #include "Meteo.h"
 #include "Particle.h"
+#include "SceneManager.h"
 
 void SHOT::Init(MOUSE* mouse)
 {
+	game = static_cast<GameScene*>(SCENEM.GetState());
+	//std::vector <METEO*> meteo = game->GetMeteo();
+	//for (auto m : meteo)
+	//{
+	//	float meteoS = m->GetScale();
+	//	missileAttack = meteoS;
+	//}
+
 	m_bullet = mouse->GetPos();
 	m_bulletScale = 2.0f;
 	m_bulletFlg = false;
@@ -14,12 +23,15 @@ void SHOT::Init(MOUSE* mouse)
 
 	keyFlg = true;
 
-	bulletRadius = 32 * m_bulletScale;
+	bulletRadius = 32;
+
+	missileAttack = 1.0f;
 
 	bulletR = mouse->GetPos().x + bulletRadius;
 	bulletL = mouse->GetPos().x - bulletRadius;
 	bulletT = mouse->GetPos().y + bulletRadius;
 	bulletB = mouse->GetPos().y - bulletRadius;
+
 }
 
 void SHOT::Update(MOUSE* mouse)
@@ -44,7 +56,6 @@ void SHOT::Update(MOUSE* mouse)
 			shotAnim = 0;
 			m_bulletFlg = false;
 		}
-
 	}
 	
 	if (!m_bulletFlg)
@@ -86,14 +97,15 @@ void SHOT::Draw()
 
 void SHOT::BulletMeteoHit()
 {
-	std::vector <METEO*> meteo = SCENE.GetMeteo();
-	std::vector <Particle*> par = SCENE.GetParticle();
+	std::vector <METEO*> meteo = game->GetMeteo();
+	std::vector <Particle*> par = game->GetParticle();
 
 	for (auto m : meteo)
 	{
 		Math::Vector2 meteoP = m->GetPos();
 		bool meteoF = m->GetFlg();
 		float meteoRad = m->GetRadius();
+		float meteoS = m->GetScale();
 
 		float meteoR = meteoP.x + meteoRad;
 		float meteoL = meteoP.x - meteoRad;
@@ -102,13 +114,19 @@ void SHOT::BulletMeteoHit()
 
 		if (m_bulletFlg && meteoF)
 		{
-			if (bulletR > meteoL && bulletL < meteoR && bulletT > meteoB && bulletB < meteoT)
+			if (bulletR > meteoL && bulletL < meteoR && bulletT > meteoB && bulletB < meteoT &&
+				shotAnim <= 2)
 			{
-				meteoF = false;
-				m->SetFlg(meteoF);
-				for (auto p : par)
+				meteoS -= missileAttack;
+				if (meteoS <= 0)
 				{
-					p->Par(meteoP, { p->Rand(), p->Rand() }, 1, true);
+					meteoS = 0;
+					meteoF = false;
+					m->SetFlg(meteoF);
+					for (auto p : par)
+					{
+						p->Par(meteoP, { p->Rand(), p->Rand() }, 1, true);
+					}
 				}
 			}
 		}

@@ -1,6 +1,9 @@
 #pragma once
 #include "Mouse.h"
 
+class GameScene;
+class METEO;
+class Particle;
 
 class SHOT
 {
@@ -25,11 +28,15 @@ private:
 
 	bool keyFlg;
 
+	float missileAttack;
+
 	Math::Matrix m_scale;
 	Math::Matrix m_trans;
 	Math::Matrix m_mat;
 
 	KdTexture* m_tex;
+
+	GameScene* game;
 
 public:
 	SHOT() {}

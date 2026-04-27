@@ -1,28 +1,45 @@
 #include "Meteo.h"
+#include "GameScene.h"
+#include "SceneManager.h"
+#include "Earth.h"
 
 void METEO::Init()
 {
+	game = static_cast<GameScene*>(SCENEM.GetState());
+
 	m_pos = { RandX(),RandY()};
 	m_move = { 0,0 };
 
 	meteoScale = 1.0f;
 	meteoFlg = true;
+
+	meteoAttack = 10.0f;
 }
 
 void METEO::Update()
 {
 	m_pos += m_move;
-
+	meteoScale = 1.0f;
 	m_move.y -= 2;
 
 	if (m_move.y <= -2)
 	{
-		m_move.y = -2;
+		m_move.y = -20;
 	}
 
-	if (m_pos.y <= -200)
+	if(meteoFlg)
 	{
-		meteoFlg = false;
+		if (m_pos.y <= -200)
+		{
+			meteoFlg = false;
+			int hp = game->GetEarth()->GetHp();
+			hp -= meteoAttack;
+			if (hp <= 0)
+			{
+				hp = 0;
+			}
+			game->GetEarth()->SetHp(hp);
+		}
 	}
 
 	if((rand() % 100 + 1) <= 2)
