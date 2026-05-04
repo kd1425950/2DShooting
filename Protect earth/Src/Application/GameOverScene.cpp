@@ -1,10 +1,12 @@
-#include "ResultScene.h"
-#include "KeyManager.h"
+#include "GameOverScene.h"
 #include "SceneManager.h"
 #include "TitleScene.h"
+#include "GameScene.h"
 #include "Mouse.h"
+#include "KeyManager.h"
+#include "main.h"
 
-void ResultScene::Update()
+void GameOverScene::Update()
 {
 	mouse->Update();
 
@@ -14,19 +16,50 @@ void ResultScene::Update()
 		if (m_alpha >= 1.0f)
 		{
 			m_alpha = 1.0f;
-
 			SCENEM.ChangeState(new TitleScene());
+			return;
+		}
+	}
+	else if (changeRetryFlg)
+	{
+		m_alpha += m_alphaAdd;
+		if (m_alpha >= 1.0f)
+		{
+			m_alpha = 1.0f;
+			SCENEM.ChangeState(new GameScene());
 			return;
 		}
 	}
 	else
 	{
 		m_alpha -= m_alphaAdd;
-
 		if (m_alpha <= 0.0f)
 		{
 			m_alpha = 0.0f;
 		}
+
+		if (mouse->GetPos().x > retryL &&
+			mouse->GetPos().x < retryR &&
+			mouse->GetPos().y > retryB &&
+			mouse->GetPos().y < retryT)
+		{
+			retryScale += retryScaleAdd;
+			if (retryScale >= 1.3f || retryScale <= 0.8f)
+			{
+				retryScaleAdd *= -1;
+			}
+
+			if (KEYM.PushLbutton())
+			{
+				changeRetryFlg = true;
+			}
+		}
+		else
+		{
+			retryScale = 1.0f;
+			retryScaleAdd = 0.02f;
+		}
+
 
 		if (mouse->GetPos().x > titleL &&
 			mouse->GetPos().x < titleR &&
@@ -38,7 +71,7 @@ void ResultScene::Update()
 			{
 				titleScaleAdd *= -1;
 			}
-
+			
 			if (KEYM.PushLbutton())
 			{
 				changeTitleFlg = true;
@@ -49,7 +82,6 @@ void ResultScene::Update()
 			titleScale = 1.0f;
 			titleScaleAdd = 0.02f;
 		}
-
 	}
 
 	scoreMat5 = Math::Matrix::CreateTranslation(0 - 64, 50, 0);
@@ -60,21 +92,24 @@ void ResultScene::Update()
 
 	scoreStringMat = Math::Matrix::CreateTranslation(0, 100, 0);
 
-	clearMat = Math::Matrix::CreateTranslation(0, 200, 0);
+	gameOverMat = Math::Matrix::CreateTranslation(0, 200, 0);
 
-	backMat = Math::Matrix::CreateTranslation(0, 0, 0);
+	gameoverbackMat = Math::Matrix::CreateTranslation(0, 0, 0);
 
 	Math::Matrix scale, trans;
-
 	scale = Math::Matrix::CreateScale(titleScale, titleScale, 1.0f);
 	trans = Math::Matrix::CreateTranslation(title.x, title.y, 0);
 	TitleStringMat = scale * trans;
+
+	scale = Math::Matrix::CreateScale(retryScale, retryScale, 1.0f);
+	trans = Math::Matrix::CreateTranslation(retry.x, retry.y, 0);
+	RetryMat = scale * trans;
 }
 
-void ResultScene::Draw()
+void GameOverScene::Draw()
 {
-	SHADER.m_spriteShader.SetMatrix(backMat);
-	SHADER.m_spriteShader.DrawTex(&backTex, Math::Rectangle{ 0,0,1280,720 }, 1.0f);
+	SHADER.m_spriteShader.SetMatrix(gameoverbackMat);
+	SHADER.m_spriteShader.DrawTex(&gameOverBackTex, Math::Rectangle{ 0,0,1280,720 }, 1.0f);
 
 	int num5 = score / 10000;
 
@@ -184,11 +219,14 @@ void ResultScene::Draw()
 	SHADER.m_spriteShader.SetMatrix(scoreStringMat);
 	SHADER.m_spriteShader.DrawTex(&scoreStringTex, Math::Rectangle{ 0,0,87,30 }, 1.0f);
 
-	SHADER.m_spriteShader.SetMatrix(clearMat);
-	SHADER.m_spriteShader.DrawTex(&clearTex, Math::Rectangle{ 0,0,481,90 }, 1.0f);
+	SHADER.m_spriteShader.SetMatrix(gameOverMat);
+	SHADER.m_spriteShader.DrawTex(&GameOverTex, Math::Rectangle{ 0,0,431,96 }, 1.0f);
 
 	SHADER.m_spriteShader.SetMatrix(TitleStringMat);
-	SHADER.m_spriteShader.DrawTex(&titleTex, Math::Rectangle{ 0, 0, 160,55 }, 1.0f);
+	SHADER.m_spriteShader.DrawTex(&TitleStringTex, Math::Rectangle{ 0, 0, 160,55 }, 1.0f);
+
+	SHADER.m_spriteShader.SetMatrix(RetryMat);
+	SHADER.m_spriteShader.DrawTex(&RetryTex, Math::Rectangle{ 0, 0, 160,64 }, 1.0f);
 
 	SHADER.m_spriteShader.SetMatrix(Math::Matrix::Identity);
 
@@ -196,13 +234,14 @@ void ResultScene::Draw()
 	SHADER.m_spriteShader.DrawBox(0, 0, 640, 360, &color, true);
 }
 
-void ResultScene::Init()
+void GameOverScene::Init()
 {
+	gameOverBackTex.Load("Texture/collapseCity.png");
+	GameOverTex.Load("Texture/GAME OVER.png");
 	scoreTex.Load("Texture/ScoreNumber.png");
 	scoreStringTex.Load("Texture/ScoreString.png");
-	titleTex.Load("Texture/TitleString.png");
-	backTex.Load("Texture/BackGround.png");
-	clearTex.Load("Texture/GAME CLEAR.png");
+	TitleStringTex.Load("Texture/TitleString.png");
+	RetryTex.Load("Texture/Retry.png");
 
 	score = SCENEM.GetScore();
 
@@ -221,26 +260,44 @@ void ResultScene::Init()
 	scoreYCut4 = 0;
 	scoreYCut5 = 0;
 
-	title = { 0,-100 };
+	title = { 0,-50 };
+	retry = { 5,-150 };
 
 	titleRadius = { 80.0f,27.5f };
+	retryRadius = { 80.0f,32.0f };
 
 	titleR = title.x + titleRadius.x;
 	titleL = title.x - titleRadius.x;
 	titleT = title.y + titleRadius.y;
 	titleB = title.y - titleRadius.y;
 
+	retryR = retry.x + retryRadius.x;
+	retryL = retry.x - retryRadius.x;
+	retryT = retry.y + retryRadius.y;
+	retryB = retry.y - retryRadius.y;
+
 	titleScale = 1.0f;
+	retryScale = 1.0f;
 
 	titleScaleAdd = 0.02f;
+	retryScaleAdd = 0.02f;
 
 	m_alpha = 1.0f;
 	m_alphaAdd = 0.03f;
 
 	changeTitleFlg = false;
-
+	changeRetryFlg = false;
 }
 
-void ResultScene::Release()
+void GameOverScene::Release()
 {
+	GameOverTex.Release();
+	gameOverBackTex.Release();
+	scoreTex.Release();
+	scoreStringTex.Release();
+
+	if (mouse)
+	{
+		delete mouse;
+	}
 }

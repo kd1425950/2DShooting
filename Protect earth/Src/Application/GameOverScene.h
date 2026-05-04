@@ -3,28 +3,32 @@
 
 class MOUSE;
 
-class ResultScene : public State
+class GameOverScene :public State
 {
 public:
-	ResultScene(){}
-	~ResultScene(){}
+
+	GameOverScene(){}
+	~GameOverScene(){}
 
 	void Update()override;
 	void Draw()override;
 	void Init()override;
 	void Release()override;
+
 private:
 
-	KdTexture backTex;
-	KdTexture clearTex;
-	KdTexture titleTex;
+	int score;
+
+	MOUSE* mouse;
+	
+	KdTexture gameOverBackTex;
 	KdTexture scoreTex;
 	KdTexture scoreStringTex;
+	KdTexture GameOverTex;
+	KdTexture TitleStringTex;
+	KdTexture RetryTex;
 
-	Math::Matrix backMat;
-	Math::Matrix clearMat;
-	Math::Matrix titleMat;
-	Math::Matrix scoreMat;
+	Math::Matrix gameOverMat;
 
 	Math::Matrix scoreMat1;
 	Math::Matrix scoreMat2;
@@ -34,7 +38,10 @@ private:
 
 	Math::Matrix scoreStringMat;
 
+	Math::Matrix gameoverbackMat;
+
 	Math::Matrix TitleStringMat;
+	Math::Matrix RetryMat;
 
 	int scoreXCut1;
 	int scoreXCut2;
@@ -52,21 +59,27 @@ private:
 	float m_alphaAdd;
 
 	bool changeTitleFlg;
+	bool changeRetryFlg;
+
+	Math::Vector2 title;
+	Math::Vector2 retry;
 
 	Math::Vector2 titleRadius;
+	Math::Vector2 retryRadius;
 
 	float titleScale;
+	float retryScale;
 
 	float titleScaleAdd;
+	float retryScaleAdd;
 
 	float titleR;
 	float titleL;
 	float titleT;
 	float titleB;
 
-	Math::Vector2 title;
-
-	int score;
-
-	MOUSE* mouse;
+	float retryR;
+	float retryL;
+	float retryT;
+	float retryB;
 };

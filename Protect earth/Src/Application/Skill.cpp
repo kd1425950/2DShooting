@@ -18,8 +18,8 @@ void SKILL::Update()
 		}
 	}
 
-	skillMat = Math::Matrix::CreateTranslation(-550, -270, 0);
-	spaceMat = Math::Matrix::CreateTranslation(-550, -170, 0);
+	skillMat = Math::Matrix::CreateScale(0.7f, 0.7f, 0) * Math::Matrix::CreateTranslation(500, -310, 0);
+	spaceMat = Math::Matrix::CreateScale(0.7f, 0.7f, 0) * Math::Matrix::CreateTranslation(500, -230, 0);
 }
 
 void SKILL::Draw()

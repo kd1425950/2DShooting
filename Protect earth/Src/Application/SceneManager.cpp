@@ -3,6 +3,8 @@
 #include "TitleScene.h"
 #include "GameScene.h"
 #include "ResultScene.h"
+#include "GameOverScene.h"
+#include "Score.h"
 
 void SceneM::Init()
 {
@@ -26,14 +28,14 @@ void SceneM::Release()
 
 void SceneM::ChangeState(State* newState)
 {
-	//if (currentState != nullptr) 
-	//{
-	//	if (currentState->GetTag() == Game)
-	//	{
-	//		GameScene* game = dynamic_cast<GameScene*>(currentState);
-	//		Time = game->GetTime();
-	//	}
-	//}
+	if (currentState != nullptr) 
+	{
+		if (currentState->GetTag() == Game)
+		{
+			GameScene* game = dynamic_cast<GameScene*>(currentState);
+			Score = game->GetScore()->GetScoreValue();
+		}
+	}
 
 	delete currentState;
 	currentState = newState;

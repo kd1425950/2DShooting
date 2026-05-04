@@ -34,19 +34,31 @@ private:
 	Math::Matrix m_trans;
 	Math::Matrix m_mat;
 
+	Math::Matrix m_UIscale;
+	Math::Matrix m_UItrans;
+	Math::Matrix m_UImat;
+
+	Math::Matrix m_UIscale2;
+	Math::Matrix m_UItrans2;
+	Math::Matrix m_UImat2;
+
 	KdTexture* m_tex;
+	KdTexture* m_uiTex;
+	KdTexture* m_uiTex2;
 
 	GameScene* game;
 
 public:
 	SHOT() {}
-	~SHOT(){}
+	~SHOT() {}
 
-	void Init(MOUSE *mouse);
+	void Init(MOUSE* mouse);
 	void Update(MOUSE* mouse);
 	void Draw();
 
 	void BulletMeteoHit();
 
 	void SetTex(KdTexture* tex) { m_tex = tex; }
+	void SetTexUI(KdTexture* uiTex) { m_uiTex = uiTex; }
+	void SetTexUI2(KdTexture* uiTex2) { m_uiTex2 = uiTex2; }
 };

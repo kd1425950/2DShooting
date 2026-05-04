@@ -52,12 +52,18 @@ private:
 
 	int meteoAttack;
 
+	float meteoSpeed;
+
 	float meteoRight = m_pos.x + meteoRadius;
 	float meteoLeft = m_pos.x - meteoRadius;
 	float meteoTop = m_pos.y + meteoRadius;
 	float meteoBottom = m_pos.y - meteoRadius;
 
+	float frame;
+
 	bool meteoFlg;
+
+	bool damageFlg;
 
 	Math::Matrix m_mat;
 

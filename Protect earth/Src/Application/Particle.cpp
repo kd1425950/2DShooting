@@ -1,15 +1,28 @@
 #include "Particle.h"
 
+Particle::Particle(Math::Vector2 pos, float size, bool repet, KdTexture* tex)
+{
+		m_pos = pos;
+	//m_move = move;
+	m_move.x = Rand();
+	m_move.y = Rand();
+	m_size = size;
+	m_repet = repet;
+	m_pTex.Load("Texture/MeteoBreak.png");
+}
+
 void Particle::Init()
 {
-	m_pos = { 0,0 };
-	m_move = { 0,0 };
-	m_size = 1;
-	m_Radius = 8;
-	m_rotate = 10;
-	m_lifespan = 0;
-	m_repet = false;
-	m_pTex = nullptr;
+	{
+		//m_pos = { 0,0 };
+		//m_move = { 0,0 };
+		//m_size = 1;
+		//m_Radius = 8;
+		//m_rotate = 10;
+		//m_lifespan = 0;
+		//m_repet = false;
+		////m_pTex = nullptr;
+	}
 }
 
 void Particle::Update()
@@ -37,13 +50,5 @@ void Particle::Draw()
 	if (!m_repet)return;
 
 	SHADER.m_spriteShader.SetMatrix(m_mat);
-	SHADER.m_spriteShader.DrawTex(m_pTex, Math::Rectangle(0, 0, 16, 16), 1.0f);
-}
-
-void Particle::Par(Math::Vector2 pos, Math::Vector2 move, float size, bool repet)
-{
-	m_pos = pos;
-	m_move = move;
-	m_size = size;
-	m_repet = repet;
+	SHADER.m_spriteShader.DrawTex(&m_pTex, Math::Rectangle(0, 0, 16, 16), 1.0f);
 }

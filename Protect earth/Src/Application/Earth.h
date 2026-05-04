@@ -6,7 +6,7 @@ public:
 	Earth() {}
 	~Earth() {}
 	void Init();
-	void Update();
+	bool Update();
 	void Draw();
 	void Release();
 
@@ -15,10 +15,12 @@ public:
 
 private:
 	KdTexture earthTex;
-	Math::Matrix earthMat;
-
+	KdTexture hpText;
 	KdTexture hpTex;
+
+	Math::Matrix earthMat;
 	Math::Matrix hpMat;
+	Math::Matrix hpTextMat;
 
 	int earthHp;
 };

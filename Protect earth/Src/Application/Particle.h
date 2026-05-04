@@ -4,7 +4,7 @@ class Particle
 {
 public:
 
-	Particle(){}
+	Particle(Math::Vector2 pos, float size, bool repet, KdTexture* tex);
 	~Particle() {}
 
 	void Init();
@@ -12,10 +12,6 @@ public:
 	void Draw();
 
 	float Rand() { return rand() % 20 - 10; }
-
-	void SetTex(KdTexture* tex) { m_pTex = tex; }
-
-	void Par(Math::Vector2 pos, Math::Vector2 move, float size, bool repet);
 
 private:
 	Math::Vector2 m_pos;
@@ -27,5 +23,5 @@ private:
 	float m_Radius;
 	float m_lifespan;
 	bool m_repet;
-	KdTexture* m_pTex;
+	KdTexture m_pTex;
 };

@@ -2,6 +2,7 @@
 #include "Scene.h"
 #include "SceneManager.h"
 #include "TitleScene.h"
+#include "GameOverScene.h"
 
 void Scene::Draw2D()
 {

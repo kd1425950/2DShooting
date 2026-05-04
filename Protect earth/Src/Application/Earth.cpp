@@ -4,20 +4,32 @@ void Earth::Init()
 {
 	earthTex.Load("Texture/BackGround.png");
 	hpTex.Load("Texture/HP.png");
+	hpText.Load("Texture/hpText.png");
 
 	earthHp = 100;
 }
 
-void Earth::Update()
+bool Earth::Update()
 {
+	if (earthHp <= 0)
+	{
+		return true;
+	}
+
 	earthMat = Math::Matrix::CreateTranslation(0, 0, 0);
 	hpMat = Math::Matrix::CreateTranslation(-384, 270, 0);
+	hpTextMat = Math::Matrix::CreateScale(0.5f, 0.5f, 1.0f) * Math::Matrix::CreateTranslation(-384, 320, 0);
+
+	return false;
 }
 
 void Earth::Draw()
 {
 	SHADER.m_spriteShader.SetMatrix(earthMat);
 	SHADER.m_spriteShader.DrawTex(&earthTex, Math::Rectangle(0, 0, 1280, 720), 1.0f);
+
+	SHADER.m_spriteShader.SetMatrix(hpTextMat);
+	SHADER.m_spriteShader.DrawTex(&hpText, Math::Rectangle(0, 0, 332, 90), 1.0f);
 
 	SHADER.m_spriteShader.SetMatrix(hpMat);
 
